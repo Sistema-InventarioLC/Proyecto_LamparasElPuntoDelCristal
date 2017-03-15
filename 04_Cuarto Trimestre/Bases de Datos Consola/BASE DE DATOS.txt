@@ -1,0 +1,169 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3
+Server version: 5.7.16-log MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database lc;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use lc;
+Database changed
+mysql> \. c:/lc.sql
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Database changed
+Query OK, 0 rows affected (0.25 sec)
+
+Query OK, 0 rows affected (0.21 sec)
+
+Query OK, 0 rows affected (0.23 sec)
+
+Query OK, 0 rows affected (0.30 sec)
+
+Query OK, 0 rows affected (0.27 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+Query OK, 0 rows affected (0.22 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+Query OK, 0 rows affected (0.21 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+Query OK, 0 rows affected (0.18 sec)
+
+Query OK, 0 rows affected (0.32 sec)
+
+Query OK, 0 rows affected (0.41 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+Query OK, 0 rows affected (0.24 sec)
+
+Query OK, 0 rows affected (0.26 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+Query OK, 0 rows affected (0.27 sec)
+
+Query OK, 0 rows affected (0.24 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+Query OK, 0 rows affected (0.23 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+Query OK, 0 rows affected (0.26 sec)
+
+Query OK, 0 rows affected (0.29 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+Query OK, 0 rows affected (0.19 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_mydb |
++----------------+
+| cliente        |
+| detallefactura |
+| factura        |
+| material       |
+| producto       |
+| tipocategoria  |
+| tipodocumento  |
+| ubicacion      |
+| usuario        |
++----------------+
+9 rows in set (0.00 sec)
+
+mysql> describe tipodocumento;
++---------------------+-------------+------+-----+---------+----------------+
+| Field               | Type        | Null | Key | Default | Extra          |
++---------------------+-------------+------+-----+---------+----------------+
+| idTipoDocumento     | int(11)     | NO   | PRI | NULL    | auto_increment |
+| NombreTipoDocumento | varchar(45) | NO   |     | NULL    |                |
++---------------------+-------------+------+-----+---------+----------------+
+2 rows in set (0.01 sec)
+
+mysql> LOAD DATA local INFILE 'C:/DATOS/TipoDocumento.txt'
+    -> INTO TABLE tipoDocumento
+    -> LINES TERMINATED BY '\r\n'
+    -> IGNORE 1 LINES(nombreTipoDocumento);
+Query OK, 7 rows affected (0.04 sec)
+Records: 7  Deleted: 0  Skipped: 0  Warnings: 0
+mysql> describe material;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| idMaterial         | int(11)     | NO   | PRI | NULL    | auto_increment |
+| NombreTipoMaterial | varchar(45) | NO   |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> LOAD DATA local INFILE 'C:/DATOS/Material.txt'
+    -> INTO TABLE Material
+    -> LINES TERMINATED BY '\r\n'
+    -> IGNORE 1 LINES(nombreTipoMaterial);
+Query OK, 7 rows affected (0.03 sec)
+Records: 7  Deleted: 0  Skipped: 0  Warnings: 0
+
+mysql> describe producto;
++-------------------------------+-------------+------+-----+---------+----------------+
+| Field                         | Type        | Null | Key | Default | Extra          |
++-------------------------------+-------------+------+-----+---------+----------------+
+| idProducto                    | int(4)      | NO   | PRI | NULL    | auto_increment |
+| TipoCategoria_idTipoCategoria | int(11)     | NO   | PRI | NULL    |                |
+| nombreProducto                | varchar(45) | NO   |     | NULL    |                |
+| cantidad                      | int(11)     | NO   |     | NULL    |                |
+| Precio                        | double      | NO   |     | NULL    |                |
+| Garantia                      | int(11)     | NO   |     | NULL    |                |
+| Tamaño                        | double      | NO   |     | NULL    |                |
+| Ubicacion_idUbicacion         | int(11)     | YES  | MUL | NULL    |                |
+| Material_idMaterial           | int(11)     | YES  | MUL | NULL    |                |
++-------------------------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.00 sec)
+
+mysql> describe usuario;
++-------------------------------+-------------+------+-----+---------+----------------+
+| Field                         | Type        | Null | Key | Default | Extra          |
++-------------------------------+-------------+------+-----+---------+----------------+
+| idUsuario                     | int(11)     | NO   | PRI | NULL    | auto_increment |
+| NombreCompletoUsuario         | varchar(50) | NO   |     | NULL    |                |
+| TipoDocumento_idTipoDocumento | int(11)     | NO   | MUL | NULL    |                |
+| identificacionUsuario         | mediumtext  | NO   |     | NULL    |                |
+| EmailUsuario                  | varchar(50) | NO   |     | NULL    |                |
+| telefonoUsuario               | mediumtext  | NO   |     | NULL    |                |
++-------------------------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from tipoDocumento;
++-----------------+--------------------------------------+
+| idTipoDocumento | NombreTipoDocumento                  |
++-----------------+--------------------------------------+
+|               1 | CEDULA CIUDADANIA                    |
+|               2 | TARJETA IDENTIDAD                    |
+|               3 | CEDULA EXTRANJERIA                   |
+|               4 | DOCUMENTO NACIONAL DE IDENTIFICACION |
+|               5 | PASAPORTE                            |
+|               6 | NUMERO DE IDENTIFICACION TRIBUTARIA  |
+|               7 |                                      |
++-----------------+--------------------------------------+
+7 rows in set (0.00 sec)
+
